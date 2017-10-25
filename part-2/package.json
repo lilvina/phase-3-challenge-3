@@ -1,0 +1,22 @@
+{
+  "name": "part-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "create": "createdb hotel_db",
+    "schema": "psql hotel_db < schema.sql",
+    "dropdb": "dropdb hotel_db",
+    "seed": "psql hotel_db < load-data.sql",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "node-print": "0.0.4",
+    "pg-promise": "^7.0.3"
+  }
+}
