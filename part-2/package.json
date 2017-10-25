@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "chai": "^4.1.2",
+    "express": "^4.16.2",
     "mocha": "^4.0.1",
     "node-print": "0.0.4",
     "pg-promise": "^7.0.3"

@@ -23,4 +23,4 @@ CREATE TABLE bookings(
   guest_id INTEGER REFERENCES guests (id),
   check_in DATE,
   check_out DATE
-)
+);
