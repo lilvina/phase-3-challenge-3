@@ -11,7 +11,7 @@ app.use( bodyParser.urlencoded( {
 
 app.get('/api/hotel/route', (req,res)=>{
   console.log('this worked!!!!--->')
-  query.getAll()
+  query.getAllGuests()
   .then(response =>{
     console.log('this is the response', response)
     res.send(1)

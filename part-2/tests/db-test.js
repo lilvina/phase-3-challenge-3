@@ -1,9 +1,9 @@
 const expect = require( 'chai' ).expect
 const query = require('../database.js')
 
-describe( 'getAll()', ()=> {
+describe( 'getAllGuests()', ()=> {
   it( 'List every guest for hotel', ()=> {
-    return query.getAll()
+    return query.getAllGuests()
     .then( results => {
       console.log('these are the results guest', results)
       expect(results[0].name).to.equal('Aurthur Velti')
