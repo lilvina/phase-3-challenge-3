@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "create": "createdb hotel_db",
-    "schema": "psql hotel_db < schema.sql",
-    "dropdb": "dropdb hotel_db",
-    "seed": "psql hotel_db < load-data.sql",
+    "create": "createdb grocery_store",
+    "schema": "psql grocery_store < schema.sql",
+    "dropdb": "dropdb grocery_store",
+    "seed": "psql grocery_store < load-data.sql",
     "test": "mocha"
   },
   "keywords": [],

@@ -1,26 +1,24 @@
-const pgp = require('pg-promise')();
+const pgp = require('pg-promise')()
 
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/hotel_db';
-const db = pgp(connectionString);
+const db = pgp({
+  database: 'grocery_store'
+})
 
-const query = {
-  getAllGuests(){
-    return db.any('SELECT name, id, email from guests')
-  },
-  getAllRooms(){
-    return db.any('SELECT room_number, capacity, available FROM rooms WHERE available = $1',[true])
-  },
-  getAllBookedRooms(guest_id){
-    return db.any(`
-      SELECT bookings.check_in, bookings.check_out, bookings.room_id, bookings.guest_id, guests.name, rooms.capacity
-      FROM guests
-      JOIN bookings
-      ON guests.id = bookings.guest_id
-      Join rooms 
-      ON rooms.id = bookings.room_id
-      WHERE guest_id = $1
-    `,[guest_id])
-   }
-
+const itemsInSection = (section) => {
+  return db.any('SELECT * FROM grocery_items WHERE section = $1', [section])
 }
-module.exports = query;
+
+const orderTotalsPerShopper = (shopperId) => {
+  return db.any('SELECT ordered_items.order_id, SUM(grocery_items.price) AS "total cost" FROM orders JOIN ordered_items ON ordered_items.order_id = orders.id JOIN grocery_items ON grocery_items.id = ordered_items.grocery_id WHERE orders.shopper_id = $1 GROUP BY ordered_items.order_id',
+    [shopperId])
+}
+
+const shoppersWithOrders = () => {
+  return db.any('SELECT shoppers.name, COUNT (orders.id) AS "number of orders" FROM shoppers JOIN orders ON shoppers.id = orders.shopper_id GROUP BY shoppers.name')
+}
+
+module.exports = {
+  itemsInSection,
+  orderTotalsPerShopper,
+  shoppersWithOrders
+}

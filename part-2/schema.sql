@@ -1,26 +1,29 @@
-DROP DATABASE IF EXISTS hotel_db;
-CREATE DATABASE hotel_db;
+DROP DATABASE IF EXISTS grocery_store;
+CREATE DATABASE grocery_store;
 
-DROP TABLE IF EXISTS guests;
-CREATE TABLE guests(
+DROP TABLE IF EXISTS grocery_items;
+CREATE TABLE grocery_items(
   id SERIAL PRIMARY KEY,
-  name VARCHAR(50),
-  email VARCHAR(100)
+  name VARCHAR(255),
+  price DECIMAL,
+  section VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS rooms;
-CREATE TABLE rooms(
+DROP TABLE IF EXISTS shoppers;
+CREATE TABLE shoppers(
   id SERIAL PRIMARY KEY,
-  room_number VARCHAR(255),
-  capacity INTEGER,
-  available BOOLEAN DEFAULT true
+  name VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS bookings;
-CREATE TABLE bookings(
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders(
   id SERIAL PRIMARY KEY,
-  room_id INTEGER REFERENCES rooms (id),
-  guest_id INTEGER REFERENCES guests (id),
-  check_in DATE,
-  check_out DATE
+  order_date DATE,
+  shopper_id INTEGER REFERENCES shoppers
+);
+
+DROP TABLE IF EXISTS ordered_items;
+CREATE TABLE ordered_items(
+  order_id INTEGER REFERENCES orders,
+  grocery_id INTEGER REFERENCES grocery_items
 );
