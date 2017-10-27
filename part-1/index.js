@@ -4,25 +4,38 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
-app.get('/api/shout/:word', (resquest, response) => {
-  let word = request.params.word
-  word = word.toUpperCase().concat()
+app.get('/api/days/:day', (request, response) => {
+  const day = request.params.day
+  const daysOfWeek = {
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+    sunday: 7
+  }
 
-  response.set('content-type', 'text/plain')
-    .send(word)
-    .status(200)
-})
-
-app.post('/api/array/merge', (request, response) => {
-  const array1 = request.body.array1
-  const array2 = request.body.array2
-
-  if(Array.isArray(array1) && Array.isArray(array2)) {
-    response.json({"result": array1.concat(array2)})
+  if(daysOfWeek[day]) {
+    response.set('Content-Type', 'text/plain')
+    response.status(200).send(`${daysOfWeek[day]}`)
   } else {
-    response.status(400).json({"error": "It must be an array entered."})
+    response.set('Content-Type', 'text/plain')
+    response.status(404).send(`'${day}' is not a valid day!`)
   }
 })
 
-app.listen(3000)
-console.log('Listening on port 3000...')
+app.post('/api/array/concat', (request, response) => {
+  const arr1 = request.body.arr1
+  const arr2 = request.body.arr2
+
+  if(Array.isArray(arr1) && Array.isArray(arr2)) {
+    response.json({"result": arr1.concat(arr2)})
+  } else {
+    response.status(400).json({"error": "Input data should be of type Array."})
+  }
+})
+
+app.listen(3000, () => {
+  console.log('Listening port 3000')
+})
